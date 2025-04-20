@@ -1,0 +1,15 @@
+node_modules/
+.env
+token.txt
+storage-state.json
+.vscode/
+.github/
+#Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+browser-context.json
+#Allure
+allure-results/
+allure-report/
