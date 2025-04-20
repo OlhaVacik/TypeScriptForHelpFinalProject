@@ -3,7 +3,7 @@ node_modules/
 token.txt
 storage-state.json
 .vscode/
-.github/
+
 #Playwright
 /test-results/
 /playwright-report/
