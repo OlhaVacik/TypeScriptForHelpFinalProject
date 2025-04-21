@@ -57,7 +57,7 @@ await api.uiLogin();
 Run API tests and lint checks:
 
 ```bash
-npm run test
+npm run test:api
 ```
 Only run API tests:
 
@@ -67,16 +67,21 @@ npx vitest run
 
 ## Running UI
 
-Run all Playwright UI tests:
+Only run UI tests:
 
 ```bash
-npx playwright test
+npm run test:ui
 ```
 
 Open Playwright Test Runner UI:
 
 ```bash
 npx playwright test --ui
+```
+Run all tests (API + UI)
+
+```bash
+npm run test:all
 ```
 
 ## Generating Allure Reports
