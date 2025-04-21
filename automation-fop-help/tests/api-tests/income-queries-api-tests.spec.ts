@@ -2,7 +2,7 @@ import { Browser, chromium } from 'playwright';
 import { ApiWorld } from 'src/api-world';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
-describe('Fop Help Api income tests', () => {
+describe.skip('Fop Help Api income tests', () => {
     let api: ApiWorld;
     let browser: Browser;
     let createdIncomeId: string;

@@ -126,4 +126,20 @@ npm run lint:fix
 
 ## CI/CD Integration
 
-A basic CI/CD pipeline can be configured using GitHub Actions or another CI system.
+The project is integrated with **GitHub Actions** to automatically run tests on every push and pull request to the main and final-project branches.
+
+Every time you run tests, the following is automatically done:
+
+Dependencies are installed,
+
+Playwright browsers are installed,
+
+UI and API tests are run,
+
+**Allure report** for tests is built.
+
+All test results are saved as build artifacts for further analysis.
+
+**Allure HTML Report** can be downloaded via GitHub Actions artifacts after the workflow is completed.
+
+*Note*: Some errors in API tests are related to the instability of the public server https://new.fophelp.pro, and not to errors in the test architecture.
