@@ -19,7 +19,7 @@ export default defineConfig({
             ]
         ],
         exclude: [],
-        include:['./tests/**/?(*.)+(spec|test).[t]s?(x)'],
+        include:['./tests/api-tests/**/?(*.)+(spec|test).[t]s?(x)'],
         // globalSetup: [
         //     '/src/hooks/vitest-global-setup.ts'
         //     // './src/hooks/init-jwt.ts'
