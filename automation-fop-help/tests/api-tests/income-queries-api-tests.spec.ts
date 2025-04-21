@@ -19,7 +19,7 @@ describe.skip('Fop Help Api income tests', () => {
         await browser.close();
     });
 
-    it('Creating new income', async () => {
+    it.skip('Creating new income', async () => {
         const [new_income, response] = await api.fpApi.getAddNewIncome();
 
         expect(response.status()).toBe(200);
@@ -41,14 +41,14 @@ describe.skip('Fop Help Api income tests', () => {
         createdIncomeId = createdIncome?.ID ?? '';
     });
 
-    it('Updating my income', async () => {
+    it.skip('Updating my income', async () => {
         const [update_income, response] = await api.fpApi.getUpdateMyIncome(createdIncomeId);
 
         expect(response.status()).toBe(200);
         expect(update_income).toBeDefined();
     });
 
-    it('Delete my income', async () => {
+    it.skip('Delete my income', async () => {
         const [update_income, response] = await api.fpApi.getDeleteMyIncome(createdIncomeId);
 
         expect(response.status()).toBe(200);
