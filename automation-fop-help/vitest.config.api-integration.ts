@@ -14,18 +14,13 @@ export default defineConfig({
             [
                 'allure-vitest/reporter',
                 {
-                    resultsDir: 'allure-results'
+                    resultsDir: 'allure-results-api-integration'
                 }
             ]
         ],
         exclude: [],
-        include:['./tests/api-tests/**/?(*.)+(spec|test).[t]s?(x)'],
-        // globalSetup: [
-        //     '/src/hooks/vitest-global-setup.ts'
-        //     // './src/hooks/init-jwt.ts'
-        // ],
+        include: ['./tests/api-integration-tests/**/?(*.)+(spec|test).[t]s?(x)'],
         testTimeout: 60000,
-
         environment: 'node'
     },
     resolve: {

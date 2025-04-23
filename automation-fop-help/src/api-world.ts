@@ -40,4 +40,31 @@ export class ApiWorld {
         await page.waitForURL('**/incomes');
         await page.close();
     }
+
+    public async cleanupIncomes(): Promise<void> {
+        const [profile, profileResp] = await this.fpApi.getProfile();
+        if (profileResp.status() !== 200 || !profile) {
+            console.warn('Failed to load profile or profile is empty');
+            return;
+        }
+
+        const monthKeys = Object.keys(profile);
+        let totalDeleted = 0;
+
+        for (const monthKey of monthKeys) {
+            const incomes = profile[monthKey];
+            const autotestIncomes = incomes.filter(income => income.Comment?.startsWith('autotest-'));
+
+            for (const income of autotestIncomes) {
+                const [, deleteResp] = await this.fpApi.getDeleteMyIncome(income);
+                if (deleteResp.status() === 200) {
+                    totalDeleted++;
+                } else {
+                    console.warn(`Failed to delete income ID: ${income.ID}`);
+                }
+            }
+        }
+
+        console.log(`Cleanup finished. Total deleted: ${totalDeleted}`);
+    }
 }

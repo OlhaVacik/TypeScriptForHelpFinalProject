@@ -1,7 +1,7 @@
 export interface IncomeRecordDto {
     ID: string;
     Date: string;
-    Income: number;
+    Income: string;
     Currency: string;
     Comment: string;
     Cash: boolean;

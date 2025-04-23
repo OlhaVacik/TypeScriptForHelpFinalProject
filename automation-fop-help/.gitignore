@@ -13,3 +13,5 @@ browser-context.json
 #Allure
 allure-results/
 allure-report/
+allure-results-api/
+allure-results-api-integration/

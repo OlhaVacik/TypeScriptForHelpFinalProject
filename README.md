@@ -1,5 +1,7 @@
 # FOP Help Automated Testing Project
 
+> Comprehensive automated testing for FOP Help platform, including API testing, UI end-to-end testing, CI/CD integration, and Allure reporting.
+
 ## Project Description
 
 This project implements automated testing for the [FOP Help](https://new.fophelp.pro) platform.
@@ -11,12 +13,32 @@ The tests cover:
 
 ## Technologies Used
 
-- TypeScript
-- Playwright
-- Vitest
-- Allure Reports
-- Eslint + Prettier
-- GitHub Actions 
+| Technology | Purpose |
+|:-----------|:--------|
+| **TypeScript** | Strong typing and safer JavaScript development |
+| **Playwright** | End-to-end UI automation testing |
+| **Vitest** | Fast unit and API testing framework |
+| **Allure Reports** | Test reports for both UI and API tests |
+| **Eslint + Prettier** | Code quality, style, and formatting enforcement |
+| **GitHub Actions** | CI/CD automation: run tests on each push and pull request |
+| **Node.js** | JavaScript runtime environment to run tests |
+
+## Configuration Files
+
+- `playwright.config.ts` — Playwright configuration for UI end-to-end tests.
+  - Manages browser settings (browser type, viewport, timeouts).
+  - Configures reporters (e.g., HTML, Allure).
+  - Defines global test settings for UI automation.
+
+- `vitest.config.api.ts` — Vitest configuration for isolated API tests.
+  - Includes API-specific test files.
+  - Sets up reporters (verbose, allure) for API test results.
+  - Manages environment settings (`node` environment for API).
+
+- `vitest.config.api-integration.ts` — Vitest configuration for API integration tests.
+  - Includes integration API test files separately.
+  - Allows running integration tests independently without mixing them with other suites.
+  - Uses similar reporters and settings as for API tests.
 
 ## Installation
 
@@ -62,7 +84,21 @@ npm run test:api
 Only run API tests:
 
 ```bash
-npx vitest run
+npx run test:api:ci
+```
+
+## Running Integration API
+
+Run Integration API tests and lint checks:
+
+```bash
+npm run test:api-integration
+```
+
+Only run Integration API tests:
+
+```bash
+npm run test:api-integration:ci
 ```
 
 ## Running UI
@@ -76,35 +112,16 @@ npm run test:ui
 Open Playwright Test Runner UI:
 
 ```bash
-npx playwright test --ui
+npm run test:ui:ci
 ```
 Run all tests (API + UI)
 
 ```bash
-npm run test:all
+npm run test:all:ci
 ```
 
 ## Generating Allure Reports
 
-### For API Tests (Vitest+Allure)
-
-1. Run API tests:
-```bash
-npm run test
-```
-
-2. Generate and open Allure report:
-```bash
-allure serve allure-results
-```
-### For UI Tests (Playwright + Allure)
-
-1. Run Playwright UI tests:
-```bash
-npx playwright test
-```
-
-2. Generate and open Allure report:
 ```bash
 allure serve allure-results
 ```
@@ -142,4 +159,7 @@ All test results are saved as build artifacts for further analysis.
 
 **Allure HTML Report** can be downloaded via GitHub Actions artifacts after the workflow is completed.
 
-*Note*: Some errors in API tests are related to the instability of the public server https://new.fophelp.pro, and not to errors in the test architecture.
+ ## Project Status
+
+This project is a functional and production-ready test automation framework.
+It is well-suited for further test coverage expansion, scales in line with the application's growth, and features a flexible architecture that easily adapts to both system changes and the addition of new functionality.

@@ -38,7 +38,7 @@ jobs:
         working-directory: ${{ env.BUILD_FOLDER }}
 
       - name: Run tests without lint
-        run: npm run test:ui && npm run test:api
+        run: npm run test:all:ci
         working-directory: ${{ env.BUILD_FOLDER }}
         env:
           FOR_HELP_API_BASE_URL: ${{secrets.FOR_HELP_API_BASE_URL}}

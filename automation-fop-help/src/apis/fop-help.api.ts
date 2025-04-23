@@ -1,7 +1,7 @@
 import { APIResponse } from 'playwright';
-import { IncomeByMonthDto } from 'src/dto/income.dto';
+import { IncomeByMonthDto, IncomeRecordDto } from 'src/dto/income.dto';
 import { ReportByQuarterDto } from 'src/dto/report.dto';
-import { IncomeTaxesDto } from 'src/dto/taxes.dto';
+import { IncomeTaxesDto, IncomeTaxesRecordDto } from 'src/dto/taxes.dto';
 import { IApiService } from 'src/services/interfaces/i-api.service';
 
 export class FopHelpApi {
@@ -9,99 +9,108 @@ export class FopHelpApi {
 
     public async getProfile():Promise<[IncomeByMonthDto | null, APIResponse]> {
         const response = await this.apiService.get('https://new.fophelp.pro/api/incomes?');
-
         const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
+
         return [bodyJson, response];
     }
 
-    public async getAddNewIncome(id?: string):Promise<[IncomeByMonthDto | null, APIResponse]> {
+    public async getAddNewIncome(id?: string):Promise<[string, APIResponse]> {
         const generatedId = id ?? `ID-${Math.floor(Math.random() * 100000)}`;
+        const generatedComment = `autotest-${Date.now()}`;
         const body = {
             'ID': generatedId,
-            'Date': '2025-04-19',
+            'Date': '2025-04-22',
             'Income': '50000',
             'Currency': 'UAH',
-            'Comment': 'тест-дата-4',
+            'Comment': generatedComment,
             'Cash': true
         };
 
         const response = await this.apiService.post('https://new.fophelp.pro/api/incomes/add', body);
-        const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
+        const bodyJson = await response.text();
+
         return [bodyJson, response];
     }
 
-    public async getUpdateMyIncome(id: string):Promise<[IncomeByMonthDto | null, APIResponse]> {
+    public async getUpdateMyIncome(incomeToUpdate: IncomeRecordDto):Promise<[IncomeRecordDto | null, APIResponse]> {
         const body = {
-            'ID': id,
-            'Date':'2025-04-19T00:00:00',
-            'Income':'10000',
-            'Currency':'UAH',
-            'Comment':'тест-дата-5',
-            'Cash':false
+            'ID': incomeToUpdate.ID,
+            'Date': incomeToUpdate.Date,
+            'Income': incomeToUpdate.Income,
+            'Currency': incomeToUpdate.Currency,
+            'Comment': incomeToUpdate.Comment,
+            'Cash': incomeToUpdate.Cash
         };
+
         const response = await this.apiService.post('https://new.fophelp.pro/api/incomes/update', body);
-        const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
+        const bodyJson = await this.safeJsonParse<IncomeRecordDto>(response);
+
         return [bodyJson, response];
     }
 
-    public async getDeleteMyIncome(id:string):Promise<[IncomeByMonthDto | null, APIResponse]> {
+    public async getDeleteMyIncome(incomeToDelete: IncomeRecordDto):Promise<[IncomeRecordDto | null, APIResponse]> {
         const body = {
-            'ID': id,
-            'Date': '2025-04-19T00:00:00',
-            'Income': '10000',
-            'Currency': 'UAH',
-            'Comment': 'тест-дата-5',
-            'Cash': false
+            'ID': incomeToDelete.ID,
+            'Date': incomeToDelete.Date.split('T')[0],
+            'Income': incomeToDelete.Income.toString(),
+            'Currency': incomeToDelete.Currency,
+            'Comment': incomeToDelete.Comment,
+            'Cash': incomeToDelete.Cash
         };
 
         const response = await this.apiService.post('https://new.fophelp.pro/api/incomes/delete', body);
-        const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
+        const bodyJson = await this.safeJsonParse<IncomeRecordDto>(response);
+
         return [bodyJson, response];
     }
 
-    public async addIncomeWithCustomCommentAndAmount(comment: string, amount: number): Promise<[IncomeByMonthDto | null, APIResponse]> {
-        const generatedId = `ID-${Math.floor(Math.random() * 100000)}`;
-        const body = {
-            ID: generatedId,
-            Date: '2025-04-19',
-            Income: amount.toString(),
-            Currency: 'UAH',
-            Comment: comment,
-            Cash: true
+    public async getCurrentUnpaidTaxes(): Promise<[IncomeTaxesDto | null, APIResponse]> {
+        const response = await this.apiService.get('https://new.fophelp.pro/api/taxes?');
+        const bodyJson = await this.safeJsonParse<IncomeTaxesDto>(response);
+
+        return [bodyJson, response];
+    }
+
+    public async getPayedTaxes(): Promise<[IncomeTaxesDto | null, APIResponse]> {
+        const response = await this.apiService.get('https://new.fophelp.pro/api/taxes/payed');
+        const bodyJson = await this.safeJsonParse<IncomeTaxesDto>(response);
+
+        return [bodyJson, response];
+    }
+
+    public async getAddPayTaxes(taxToPay: IncomeTaxesRecordDto):Promise<[string, APIResponse]> {
+        const generatedComment = `added-${Date.now()}`;
+        const body: IncomeTaxesRecordDto = {
+            ID: taxToPay.ID,
+            Date: taxToPay.Date,
+            Incomes: taxToPay.Incomes,
+            Expenses: taxToPay.Expenses,
+            FlatTax: taxToPay.FlatTax,
+            SSP: taxToPay.SSP,
+            VAT: taxToPay.VAT,
+            Comment: generatedComment,
+            Payed: taxToPay.Payed
         };
 
-        const response = await this.apiService.post('https://new.fophelp.pro/api/incomes/add', body);
-        const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
-        return [bodyJson, response];
+        const response = await this.apiService.post('https://new.fophelp.pro/api/taxes/pay', body);
+
+        return [generatedComment, response];
     }
 
     public async getCurrentTaxesReports(): Promise<[IncomeTaxesDto | null, APIResponse]> {
         const response = await this.apiService.get('https://new.fophelp.pro/api/reports/taxes');
         const bodyJson = await this.safeJsonParse<IncomeTaxesDto>(response);
+
         return [bodyJson, response];
     }
 
     public async getAllReports(): Promise<[ReportByQuarterDto | null, APIResponse]> {
         const response = await this.apiService.get('https://new.fophelp.pro/api/reports/all');
-
         const bodyJson = await this.safeJsonParse<ReportByQuarterDto>(response);
+
         return [bodyJson, response];
     }
 
-    public async updateIncomeCustom(body: {
-        ID: string;
-        Date: string;
-        Income: string;
-        Currency: string;
-        Comment: string;
-        Cash: boolean;
-    }): Promise<[IncomeByMonthDto | null, APIResponse]> {
-
-        const response = await this.apiService.post('https://new.fophelp.pro/api/incomes/update', body);
-
-        const bodyJson = await this.safeJsonParse<IncomeByMonthDto>(response);
-        return [bodyJson, response];
-    }
     private async safeJsonParse<T>(response: APIResponse): Promise<T | null> {
         const contentType = response.headers()['content-type'] ?? '';
 
@@ -123,6 +132,7 @@ export class FopHelpApi {
             }
         } catch (error) {
             console.error('Parsing error JSON:', error);
+
             return null;
         }
     }
