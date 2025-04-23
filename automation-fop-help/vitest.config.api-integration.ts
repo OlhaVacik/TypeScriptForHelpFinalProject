@@ -14,7 +14,7 @@ export default defineConfig({
             [
                 'allure-vitest/reporter',
                 {
-                    resultsDir: 'allure-results-api-integration'
+                    resultsDir: 'allure-results'
                 }
             ]
         ],

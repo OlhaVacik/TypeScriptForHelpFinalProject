@@ -53,17 +53,8 @@ jobs:
         working-directory: ${{ env.BUILD_FOLDER }}
         if: always()
 
-      - name: Merge Allure results
-        run: |
-          mkdir -p ${{ env.BUILD_FOLDER }}/allure-results-merged
-          cp -r ${{ env.BUILD_FOLDER }}/allure-results/* ${{ env.BUILD_FOLDER }}/allure-results-merged/ || true
-          cp -r ${{ env.BUILD_FOLDER }}/allure-results-api/* ${{ env.BUILD_FOLDER }}/allure-results-merged/ || true
-          cp -r ${{ env.BUILD_FOLDER }}/allure-results-api-integration/* ${{ env.BUILD_FOLDER }}/allure-results-merged/ || true
-        working-directory: ${{ env.BUILD_FOLDER }}
-        if: always()
-
       - name: Build Allure report
-        run: npx allure generate allure-results-merged --clean --single-file -o allure-report
+        run: npx allure generate allure-results --clean --single-file -o allure-report
         working-directory: ${{ env.BUILD_FOLDER }}
         if: always()  
 
