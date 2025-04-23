@@ -54,7 +54,7 @@ jobs:
         if: always()
 
       - name: Merge Allure results
-        run: 
+        run: |
           mkdir -p ${{ env.BUILD_FOLDER }}/allure-results-merged
           cp -r ${{ env.BUILD_FOLDER }}/allure-results/* ${{ env.BUILD_FOLDER }}/allure-results-merged/ || true
           cp -r ${{ env.BUILD_FOLDER }}/allure-results-api/* ${{ env.BUILD_FOLDER }}/allure-results-merged/ || true
