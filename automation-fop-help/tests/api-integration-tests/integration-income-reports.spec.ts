@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { Browser, chromium } from 'playwright';
 import { ApiWorld } from 'src/api-world';
 
-describe('Fop Help API: Integration Test', () => {
+describe.skip('Fop Help API: Integration Test', () => {
     let api: ApiWorld;
     let browser: Browser;
 

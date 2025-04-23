@@ -36,14 +36,14 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
         working-directory: ${{ env.BUILD_FOLDER }}
-
+      
       - name: Run tests without lint
         run: npm run test:all:ci
         working-directory: ${{ env.BUILD_FOLDER }}
         env:
-          FOR_HELP_API_BASE_URL: ${{secrets.FOR_HELP_API_BASE_URL}}
-          FH_USER_NAME: ${{secrets.FH_USER_NAME}}
-          FH_PASSWORD: ${{secrets.FH_PASSWORD}}
+          FOR_HELP_API_BASE_URL: ${{ secrets.FOR_HELP_API_BASE_URL }}
+          FH_USER_NAME: ${{ secrets.FH_USER_NAME }}
+          FH_PASSWORD: ${{ secrets.FH_PASSWORD }}
         if: always()  
 
       - name: Build Allure report
