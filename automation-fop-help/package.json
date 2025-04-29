@@ -1,0 +1,50 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "ts simple project",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:api && npm run test:api-integration && npm run test:ui",
+    "test:api": "npm run lint && vitest run --config vitest.config.api.ts",
+    "test:api-integration": "vitest run --config vitest.config.api-integration.ts",
+    "test:ui": "playwright test",
+    "test:all": "npm run test:api && npm run test:api-integration && npm run test:ui",
+    "test:api:ci": "vitest run --config vitest.config.api.ts",
+    "test:api-integration:ci": "vitest run --config vitest.config.api-integration.ts",
+    "test:ui:ci": "playwright test",
+    "test:all:ci": "npm run test:api:ci && npm run test:api-integration:ci && npm run test:ui:ci",
+    "build": "npm run lint && tsc --build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@playwright/test": "^1.52.0",
+    "@stylistic/eslint-plugin": "^3.0.0",
+    "@stylistic/eslint-plugin-ts": "^3.0.0",
+    "@types/chai": "^5.0.1",
+    "@types/dotenv-safe": "^8.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "@vitest/ui": "^3.0.6",
+    "allure-commandline": "^2.33.0",
+    "allure-playwright": "^3.2.1",
+    "allure-vitest": "^3.2.1",
+    "chai": "^5.2.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "globals": "^15.14.0",
+    "prettier": "3.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.21.0",
+    "vitest": "^3.0.6"
+  },
+  "dependencies": {
+    "dotenv-safe": "^9.1.0",
+    "playwright": "^1.51.0"
+  }
+}
