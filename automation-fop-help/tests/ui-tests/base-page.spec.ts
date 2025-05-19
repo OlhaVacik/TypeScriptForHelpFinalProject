@@ -1,6 +1,7 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
 import { ApiWorld } from 'src/api-world';
 import { FopHelpBasePage } from 'src/pages/base.page';
+import 'src/hooks/hooks';
 
 test.describe('UI tests', () => {
     let context: BrowserContext;
@@ -15,10 +16,6 @@ test.describe('UI tests', () => {
         await apiWorld.uiLogin();
         page = await context.newPage();
         basePage = new FopHelpBasePage(page);
-    });
-
-    test.afterEach(async () => {
-        await context.close();
     });
 
     test('User can open main page', async () => {
@@ -74,5 +71,10 @@ test.describe('UI tests', () => {
         await page.goto('https://new.fophelp.pro/');
 
         await expect(basePage.header.selectHeader('Non Existent Menu')).rejects.toThrow('Header "Non Existent Menu" not found');
+    });
+
+    test('Should fail: Main page does not contain unexpected text', async () => {
+        await page.goto('https://new.fophelp.pro/');
+        await expect(page.getByText('Some Totally Nonexistent Text')).toBeVisible();
     });
 });
