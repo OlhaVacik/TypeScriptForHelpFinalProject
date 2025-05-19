@@ -72,9 +72,4 @@ test.describe('UI tests', () => {
 
         await expect(basePage.header.selectHeader('Non Existent Menu')).rejects.toThrow('Header "Non Existent Menu" not found');
     });
-
-    test('Should fail: Main page does not contain unexpected text', async () => {
-        await page.goto('https://new.fophelp.pro/');
-        await expect(page.getByText('Some Totally Nonexistent Text')).toBeVisible();
-    });
 });
