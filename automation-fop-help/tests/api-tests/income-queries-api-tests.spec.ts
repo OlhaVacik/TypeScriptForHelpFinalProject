@@ -17,6 +17,7 @@ describe('Fop Help Api income tests', () => {
     }, 30000);
 
     afterAll(async () => {
+        await api.cleanupIncomes();
         await browser.close();
     });
 

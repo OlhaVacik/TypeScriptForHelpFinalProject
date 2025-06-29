@@ -84,7 +84,7 @@ npm run test:api
 Only run API tests:
 
 ```bash
-npx run test:api:ci
+npm run test:api:ci
 ```
 
 ## Running Integration API
